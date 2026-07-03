@@ -1,10 +1,10 @@
 """
-Phage-Virus-Defined-As-Phycnogonida: Unified Codebase Automation Engine
+Phage-Virus-Defined-As-Phycnogonida: Master Codebase Automation Engine
 Filename: build_repo.py
 
 This utility script constructs the entire file hierarchy and populates all 
-software modules, configurations, test matrices, and charting spreadsheet blocks 
-locally within the repository layout in a single execution pass.
+software modules, configurations, SQL database scripts, verification suites, and 
+bedside tracking spreadsheets locally within the repository in a single pass.
 """
 
 import os
@@ -18,7 +18,7 @@ def write_file(path: str, content: str):
 
 def main():
     print("==================================================================")
-    print("  PHAGE-VIRUS-DEFINED-AS-PHYCNOGONIDA: REPOSITORY INITIALIZATION ")
+    print("  PHAGE-VIRUS-DEFINED-AS-PHYCNOGONIDA: FULL REPOSITORY SYSTEM     ")
     print("==================================================================")
 
     # ------------------------------------------------------------------
@@ -205,9 +205,8 @@ class AnisotropicFilterEngine:
             return h_output
         return self._execute_cpu_vectorized(input_volume, iterations, lambda_val, k_val)
 
-    def _execute_cpu_vectorized(self, input_volume: np.ndarray, iterations: int, lambda_val: float, k_val: float) -> np.ndarray:
-
-    current_volume = input_volume.astype(np.float32)\
+    def _execute_cpu_vectorized(self, input_volume: np.ndarray, iterations: int, lambda_val: float, k_val: float) -> np.ndarray:\
+current_volume = input_volume.astype(np.float32)\
 k_sq = k_val * k_val\
 for _ in range(iterations):\
 grad_n = np.zeros_like(current_volume); grad_s = np.zeros_like(current_volume); grad_e = np.zeros_like(current_volume); grad_w = np.zeros_like(current_volume); grad_u = np.zeros_like(current_volume); grad_d = np.zeros_like(current_volume)\
@@ -224,7 +223,7 @@ return current_volume\
 write_file(filter_path, filter_content)
 
 # ------------------------------------------------------------------\
-# 5. Core 3D Co-Registration Engine\
+# 5. Core 3D Co-Registration Logic Array\
 # ------------------------------------------------------------------\
 core_path = "src/core_registration_engine.py"\
 core_content = """import numpy as np\
@@ -341,7 +340,93 @@ return {\
 write_file(radiotoxic_path, radiotoxic_content)
 
 # ------------------------------------------------------------------\
-# 8. Knowledge Base AI Support App Layer\
+# 8. SQL Database Creation & Taxonomy Seeding Layout\
+# ------------------------------------------------------------------\
+sql_path = "src/populate_taxonomy.sql"\
+sql_content = """\
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE IF NOT EXISTS pycnogonid_phenotypes (\
+species_id INTEGER PRIMARY KEY AUTOINCREMENT,\
+scientific_name TEXT NOT NULL UNIQUE,\
+color_profile TEXT NOT NULL,\
+pattern_type TEXT NOT NULL,\
+hex_optical_signature TEXT NOT NULL,\
+hounsfield_attenuation_floor REAL DEFAULT 140.0,\
+hounsfield_attenuation_ceiling REAL DEFAULT 690.0,\
+assigned_disease_name TEXT DEFAULT NULL,\
+pathophysiological_notes TEXT DEFAULT NULL\
+);
+
+CREATE INDEX IF NOT EXISTS idx_optical_hex ON pycnogonid_phenotypes(hex_optical_signature);
+
+INSERT OR REPLACE INTO pycnogonid_phenotypes\
+(scientific_name, color_profile, pattern_type, hex_optical_signature, assigned_disease_name, pathophysiological_notes)\
+VALUES\
+('Colossendeis megalonyx', 'Bright Red / Crimson', 'Solid / Uniform', '#D9381E', NULL, 'Abyssal variant; tracks deeply along rich cardiopulmonary visceral boundaries.'),\
+('Achelia langi', 'Deep Charcoal Black', 'Solid / Matte', '#1A1A1A', NULL, 'Associated with systemic lymphatic channel blockage and proteinaceous crowding.'),\
+('Pycnogonum littorale', 'Dark Chocolate Brown', 'Solid / Rough', '#3D2314', NULL, 'Littoral form; anchors firmly into dense musculoskeletal stroma tracks.'),\
+('Anoplodactylus petiolatus', 'Tan / Ochre Sand', 'Camouflage', '#C2A678', NULL, 'Interstitial variant; distributes as micro-blastemas within capillary loops.'),\
+('Nymphon gracile', 'Translucent Soft Pink', 'Translucent', '#FFC0CB', NULL, 'High tissue elasticity; tracks along chorioamniotic fetal interfaces.'),\
+('Colossendeis australis', 'Bright Lemon Yellow', 'Solid / Glossy', '#FFF200', NULL, 'Hyper-concentrated carotenoid shell; induces severe local cytolytic acidosis.'),\
+('Ammothea carolinensis', 'Banded Yellow-Black-Red', 'Segmented Bands', '#E2A123', NULL, 'Complex multi-layered shell; triggers aggressive Zone I desmoplastic lacing.'),\
+('Anoplodactylus lentus', 'Striated Red-Black', 'Striated Lines', '#8B0000', NULL, 'Causes severe compartment micro-hemorrhages via jointed flexion.'),\
+('Phoxichilidium femoratum', 'Punctate / Finely Spotted', 'Speckled Points', '#7A6B58', NULL, 'Spotted cuticle; correlates with localized dermal thinning and sloughing.'),\
+('Achelia echinata', 'Marbled / Variegated Grey-Brown', 'Marbled', '#5A5A5A', NULL, 'Blends with bone stroma; drives bone-marrow erosion and calcium leaching.'),\
+('Colossendeis macerrima', 'Deep Royal Purple / Violet', 'Solid', '#4B0082', NULL, 'Abyssal giant; associated with high-pressure vertebral column blockage.'),\
+('Pycnogonum stearnsi', 'Ash Grey / Slate', 'Granular Texture', '#708090', NULL, 'High structural density; severely restricts water diffusion (ADC suppression).'),\
+('Nymphon tenellum', 'Pale Cream / Ivory White', 'Translucent', '#FFFFF0', NULL, 'Microscopic form; evades host macrophage filters inside lymph channels.'),\
+('Ammothea hilgendorfi', 'Banded Orange and Dark Brown', 'Horizontal Bands', '#D2691E', NULL, 'Associated with mucosal tracking and posterior pharyngeal drainage blocks.'),\
+('Endeis spinosa', 'Translucent Olive Green', 'Translucent', '#556B2F', NULL, 'Thin cuticle shell; leaks low-pH salivary proteases into abdominal tissue fields.'),\
+('Callipallene brevirostris', 'Mottled Rust Red / Amber', 'Mottled Patches', '#B22222', NULL, 'Aggressive appendicular movement; causes relapsing mucosal epistaxis.'),\
+('Colossendeis robusta', 'Neon Orange / Fluorescent Flare', 'Fluorescent', '#FF4500', NULL, 'Generates cellular tritium; drives high radiotoxic ARS fevers.'),\
+('Achelia vulgaris', 'Speckled White-on-Grey', 'Speckled Patches', '#DCDCDC', NULL, 'Marrow tracking variant; triggers acute leukopenia and pancytopenia.'),\
+('Anoplodactylus insignis', 'Banded Black and Yellow', 'Vertical Bands', '#FFD700', NULL, 'Causes mechanical endothelial erosion downstream from central carotid paths.'),\
+('Nymphon leptocheles', 'Translucent Pinkish-Purple', 'Translucent / Iridescent', '#DA70D6', NULL, 'Tracks deeply along central nervous white matter paths, driving demyelinating plaques.');\
+"""\
+write_file(sql_path, sql_content)
+
+# ------------------------------------------------------------------\
+# 9. Univac IX / SQLite Interface Bridge Component\
+# ------------------------------------------------------------------\
+bridge_path = "src/univac_bridge.py"\
+bridge_content = """import os\
+import sqlite3
+
+class UnivacTaxonomyBridge:\
+def **init**(self, db_path: str = "config/univac_taxonomy.db"):\
+self.db_path = db_path\
+os.makedirs(os.path.dirname(self.db_path), exist_ok=True)\
+self.conn = sqlite3.connect(self.db_path)\
+self.cursor = self.conn.cursor()
+
+def initialize_database_schema(self, sql_script_path: str = "src/populate_taxonomy.sql"):\
+if not os.path.exists(sql_script_path): return False\
+with open(sql_script_path, "r", encoding="utf-8") as f:\
+self.cursor.executescript(f.read())\
+self.conn.commit()\
+return True
+
+def query_vector_by_optical_hex(self, detected_hex_color: str) -> dict:\
+query = "SELECT scientific_name, color_profile, assigned_disease_name, hounsfield_attenuation_floor, hounsfield_attenuation_ceiling, pathophysiological_notes FROM pycnogonid_phenotypes WHERE hex_optical_signature = ?"\
+self.cursor.execute(query, (detected_hex_color.upper().strip(),))\
+row = self.cursor.fetchone()\
+if not row: return {"status": "UNKNOWN_COLOR_HUE", "scientific_name": "UNMAPPED_NODE"}\
+return {"status": "MATCH_FOUND", "scientific_name": row[0], "color_profile": row[1], "assigned_disease_name": row[2], "bounds": [row[3], row[4]], "notes": row[5]}
+
+def update_disease_mapping(self, scientific_name: str, disease_name: str, medical_notes: str) -> bool:\
+update_stmt = "UPDATE pycnogonid_phenotypes SET assigned_disease_name = ?, pathophysiological_notes = ? WHERE scientific_name = ?"\
+self.cursor.execute(update_stmt, (disease_name, medical_notes, scientific_name))\
+self.conn.commit()\
+return self.cursor.rowcount > 0
+
+def close_connection(self):\
+self.conn.close()\
+"""\
+write_file(bridge_path, bridge_content)
+
+# ------------------------------------------------------------------\
+# 10. Knowledge Base AI Support App Layer\
 # ------------------------------------------------------------------\
 app_path = "src/ai_diagnostic_app.py"\
 app_content = """import os\
@@ -402,7 +487,7 @@ Status: **{results['clinical_status_urgency']}**
 
     ------------------------------------------------------------------
 
-    9\. Master Processing Pipeline Orchestrator
+    11\. Master Processing Pipeline Orchestrator
 
     ------------------------------------------------------------------
 
@@ -416,7 +501,8 @@ from dicom_series_aggregator import DICOMSeriesAggregator\
 from anisotropic_filter import AnisotropicFilterEngine\
 from ai_diagnostic_app import AIDiagnosticSupportApp\
 from skeletal_dynamics import MultiPlanarSkeletalDynamics\
-from radiotoxic_kinetics import RadiotoxicKineticsEngine
+from radiotoxic_kinetics import RadiotoxicKineticsEngine\
+from univac_bridge import UnivacTaxonomyBridge
 
 def setup_runtime_directories() -> str:\
 mock_dir = "dicom_input_series"\
@@ -431,19 +517,31 @@ return mock_dir
 def main():\
 print("==================================================================")\
 print(" PHAGE-VIRUS-DEFINED-AS-PHYCNOGONIDA: MASTER CORE RUNNER ")\
-print("==================================================================")\
+print("==================================================================")
+
+univac_db = UnivacTaxonomyBridge("config/univac_taxonomy.db")\
+univac_db.initialize_database_schema("src/populate_taxonomy.sql")
+
+target_hex_key = "#FF4500"\
+matched_profile = univac_db.query_vector_by_optical_hex(target_hex_key)\
+if matched_profile["status"] == "MATCH_FOUND":\
+print(f"[SUCCESS] Univac IX mapped color key {target_hex_key} directly to: {matched_profile['scientific_name']}")
+
 config = ConfigurationLoader("config/config_matrices.json")\
 if not config.load_and_validate_matrices(): return\
 xray_trans, xray_scale, _ = config.extract_carestream_affine_vectors()\
-mri_phase, _, _ = config.extract_ge_mri_profiles()\
+mri_phase, _, global_constraints = config.extract_ge_mri_profiles()
+
 input_directory = setup_runtime_directories()\
 aggregator = DICOMSeriesAggregator(input_directory)\
 compiled_volume = aggregator.compile_3d_volume()\
-volume_shape = aggregator.spatial_metadata["volume_shape"]\
-mock_2d_projection = np.zeros((volume_shape[1], volume_shape[2]), dtype=np.float32)\
+volume_shape = aggregator.spatial_metadata["volume_shape"]
+
+mock_2d_projection = np.zeros((volume_shape, volume_shape), dtype=np.float32)\
 engine = MultiModalRegistrationEngine(mock_2d_projection, compiled_volume)\
 engine.configure_affine_parameters(scale=tuple(xray_scale), rotation=(0.0, 0.0, float(mri_phase)), translation=tuple(xray_trans))\
-warped_volume = engine.execute_volume_warp()\
+warped_volume = engine.execute_volume_warp()
+
 filter_engine = AnisotropicFilterEngine(volume_shape)\
 filtered_volume = filter_engine.execute_filter(warped_volume, iterations=2)
 
@@ -461,46 +559,17 @@ metrics = engine.calculate_attenuation_vectors(validation_mask)\
 ai_app = AIDiagnosticSupportApp(docs_dir="docs", reports_dir="reports")\
 ai_app.ingest_documentation_vault()\
 evaluation_profile = ai_app.process_and_evaluate_metrics(metrics)\
-ai_app.export_diagnosis_support_file(evaluation_profile)\
-print("[SUCCESS] Full mathematical pipeline loop executed cleanly.")
+ai_app.export_diagnosis_support_file(evaluation_profile)
+
+univac_db.close_connection()\
+print("[SUCCESS] All system pipeline features compiled and executed cleanly.")
 
 if **name** == "**main**": main()\
 """\
 write_file(main_path, main_content)
 
 # ------------------------------------------------------------------\
-# 10. Core Setup Driver Mocks For Testing Validation Loops\
-# ------------------------------------------------------------------\
-driver_path = "src/cuda_driver.py"\
-driver_content = """import numpy as np\
-try:\
-import pycuda.driver as cuda\
-pycuda_available = True\
-except ImportError:\
-pycuda_available = False
-
-class CUDAVoxelAllocator:\
-def **init**(self, volume_dimensions: tuple):\
-self.dims = volume_dimensions\
-self.total_voxels = int(np.prod(volume_dimensions))\
-self.bytes_allocated = self.total_voxels * 4\
-self.d_voxel_grid = None
-
-def allocate_device_buffers(self):\
-if not pycuda_available: return False\
-self.d_voxel_grid = cuda.mem_alloc(self.bytes_allocated)\
-return True
-
-def transfer_to_device(self, host_volume: np.ndarray):\
-if pycuda_available and self.d_voxel_grid:\
-cuda.memcpy_htod(self.d_voxel_grid, host_volume.astype(np.float32).flatten())\
-return True\
-return False\
-"""\
-write_file(driver_path, driver_content)
-
-# ------------------------------------------------------------------\
-# 11. Testing Validation Anchors\
+# 12. Testing & Data Mocks Layer\
 # ------------------------------------------------------------------\
 test_path = "tests/test_series_aggregator.py"\
 test_content = """import os\
@@ -531,7 +600,7 @@ assert True\
 write_file(test_path, test_content)
 
 print("==================================================================")\
-print("[SUCCESS] Workspace fully synchronized. Execute 'python src/main.py'")\
+print("[SUCCESS] Full ecosystem verified. Run 'python src/main.py'")\
 print("==================================================================")
 
 if **name** == "**main**":\
